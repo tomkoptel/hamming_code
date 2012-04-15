@@ -1,50 +1,77 @@
-_ = require('underscore')._
-class HammingCode
-  constructor: (@word) ->
-    @check_positions = {}
-    @parity_bits = @get_parity_bits()
-    @limit = _.last(@progression(@max_rank,2)) * 2
+# Dependency for testing in node environment
+#_ = require('underscore')._
 
-  get_parity_bits: ->
-    @calculate_max_rank()
-    @progression(@max_rank,2)
+class Integer
+  @isEven: (num) ->
+    num % 2 == 0
 
-  calculate_max_rank: ->
-    @max_rank = Math.sqrt(@word.length)
-    @max_rank = parseInt(@max_rank.toFixed()) + 1
-
-  progression: (times, rank, start = 1) ->
+  @progression: (times, rank, start = 1) ->
     range = _.range(times)
     _(range).map (el) -> Math.pow( (start * rank), el )
 
-  insert_parity_positions: ->
-    _(@parity_bits).each (position) =>
-      @word.splice(position - 1, 0, null)
+class Parity
+  constructor: (@word) ->
+    @progression_rate = @get_rate()
+    @bits = @calculate_bits()
 
-  calculate_check_positions: ->
-    _(@parity_bits).each (bit) =>
-      @check_positions[bit] = @define_positions( [bit],bit )
+  get_rate: ->
+    rate = Math.sqrt(@word.length)
+    rate = parseInt(rate.toFixed()) + 1
+
+  calculate_bits: ->
+    Integer.progression(@progression_rate,2)
+
+  get_word: ->
+    _(@bits).each (position) =>
+      @word.splice(position - 1, 0, null)
+    @word
+
+class Positions
+  constructor: (@parity) ->
+    @limit = @get_limit()
+    @checked = @get_positions()
+
+  get_limit: ->
+    rate = @parity.progression_rate + 1
+    progression = Integer.progression(rate,2)
+    _.last(progression)
+
+  get_positions: ->
+    positions = {}
+    _(@parity.bits).each (bit) =>
+      positions[bit] = @define_positions( [bit], bit )
+    positions
 
   define_positions: (container, bit) ->
-    last = bit
-    while last < @limit
-      last += @step(container, bit)
-      container.push(last)
+    el = bit
+    while el < @limit
+      el += @step(container, bit)
+      container.push(el)
     container
 
   step: (container, bit) ->
     if (container.length % bit == 0) then (bit + 1) else 1
 
-  encode: ->
-    @insert_parity_positions()
-    @calculate_check_positions()
-    _(@check_positions).each (positions, bit) =>
-      parity = _(positions).map (position) => @word[position - 1]
-      result = _(parity).filter (num) -> num == 1
-      @word[bit - 1] = if @isEven(result.length) then 0 else 1
+class HammingCode
+  constructor: (@origin) ->
+    @parity = new Parity(@origin)
+    @positions = new Positions(@parity)
+    @word = @parity.get_word()
 
-  isEven: (num) ->
-    num % 2 == 0
+  encode: ->
+    _(@positions.checked).each (positions, bit) =>
+      bits = @fetch_bits(positions)
+      result = @calculate_positive_bit(bits)
+      @word[bit - 1] = @get_result_bit(result)
+
+  fetch_bits: (positions) ->
+    _(positions).map (position) => @word[position - 1]
+
+  calculate_positive_bit: (bits) ->
+    _(bits).filter (num) -> num == 1
+
+  get_result_bit: (result) ->
+    if Integer.isEven(result.length) then 0 else 1
 
 root = exports ? window
 root.HammingCode = HammingCode
