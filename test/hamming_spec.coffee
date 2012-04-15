@@ -1,5 +1,5 @@
 require('expectThat.mocha')
-{HammingCode} = require('../assets/javascripts/app/hamming.js.coffee')
+{HammingCode} = require('../assets/javascripts/lib/hamming.js.coffee')
 
 describe 'HammingCode', ->
   positions_to_check = {

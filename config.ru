@@ -3,9 +3,10 @@ require 'bundler'
 Bundler.require
 set :environment, ENV['RACK_ENV'].to_sym
 
-require 'config/environment'
+require 'environment'
 require 'rack/contrib'
-require 'tilt/haml'
+require 'tilt'
+require 'eco'
 require 'haml'
 
 map '/assets' do
@@ -13,6 +14,7 @@ map '/assets' do
   sprockets.append_path 'assets/images'
   sprockets.append_path 'assets/javascripts'
   sprockets.append_path 'assets/stylesheets'
+  sprockets.append_path 'assets/templates'
   Sprockets::Helpers.configure do |config|
     config.environment = sprockets
     config.prefix = "/assets"

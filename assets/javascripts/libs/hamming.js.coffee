@@ -63,6 +63,7 @@ class HammingCode
       bits = @fetch_bits(positions)
       result = @calculate_positive_bit(bits)
       @word[bit - 1] = @get_result_bit(result)
+    this
 
   fetch_bits: (positions) ->
     _(positions).map (position) => @word[position - 1]
