@@ -51,16 +51,19 @@ class Positions
 
 class HammingCode
   constructor: (@origin) ->
-    @parity = new Parity(@origin)
+    @parity = new Parity(_(@origin).clone())
     @positions = new Positions(@parity)
     @word = @parity.get_word()
 
   encode: ->
     _(@positions.checked).each (positions, bit) =>
-      bits = @fetch_bits(positions)
-      result = @calculate_positive_bit(bits)
-      @word[bit - 1] = @get_result_bit(result)
+      @encodeByPositions(positions, bit)
     this
+
+  encodeByPositions: (positions, bit) ->
+    bits = @fetch_bits(positions)
+    result = @calculate_positive_bit(bits)
+    @word[bit - 1] = @get_result_bit(result)
 
   fetch_bits: (positions) ->
     _(positions).map (position) => @word[position - 1]

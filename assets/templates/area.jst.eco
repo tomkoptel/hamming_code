@@ -1,0 +1,5 @@
+<span>Початкове значення: <%= @origin %> </span>
+<span>Результат: <%= @result %> </span>
+<input type='button' id='next' value='Наступний крок'/>
+<span> ЧИ </span>
+<input type='button' id='start' value='Спочатку'/>

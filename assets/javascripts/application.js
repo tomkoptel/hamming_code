@@ -3,6 +3,7 @@
 //= require ./libs/underscore.string.js
 //= require ./libs/backbone.min.js
 //= require ./libs/word_parser.js
+//= require ./libs/partial.js
 //= require ./libs/hamming.js
 
 //= require_tree ../templates/

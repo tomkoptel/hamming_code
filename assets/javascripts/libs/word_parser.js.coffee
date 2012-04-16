@@ -15,7 +15,7 @@ class WordParser
   convertWord: (defered) ->
     try
       word = @splitWord()
-      word = _(word).map (bit) -> @isConvertable(bit)
+      word = _(word).map (bit) => @isConvertable(bit)
       defered.resolve(word)
     catch error
       defered.reject(error)

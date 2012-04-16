@@ -5,7 +5,7 @@ class MainRoutes extends Backbone.Router
   initialize: -> @container = $('#container')
 
   index: ->
-    view = new EncodingView(el: @container)
+    view = new MainEncoding(el: @container)
     view.render()
 
 root = exports ? window
