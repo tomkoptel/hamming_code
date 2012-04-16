@@ -1,1 +1,7 @@
-Hello world!
+<form>
+  <label>Ведіть кодове слово </label>
+  <input type='input' name='word'/>
+  <input type='submit' value='Підтвердити'/>
+</form>
+
+<ul></ul>

@@ -1,6 +1,3 @@
-# Dependency for testing in node environment
-#_ = require('underscore')._
-
 class Integer
   @isEven: (num) ->
     num % 2 == 0
