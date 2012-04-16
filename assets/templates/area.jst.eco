@@ -1,5 +1,15 @@
-<span>Початкове значення: <%= @origin %> </span>
-<span>Результат: <%= @result %> </span>
-<input type='button' id='next' value='Наступний крок'/>
-<span> ЧИ </span>
-<input type='button' id='start' value='Спочатку'/>
+<table id='choose'>
+
+  <tr>
+    <td>
+      <span>Початкове значення: <%= @origin %>
+      Результат: <%= @result %> </span>
+    </td>
+
+    <td>
+      <input type='button' class='fancy' id='next' value='Наступний крок'/>
+      <input type='button' class='fancy' id='start' value='Спочатку'/>
+    </td>
+  </tr>
+
+</table>

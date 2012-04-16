@@ -1,5 +1,5 @@
 <form>
-  <label>Ведіть кодове слово </label>
+  <label>Введіть кодове слово:</label>
   <input type='input' name='word'/>
   <input type='submit' value='Підтвердити'/>
 </form>
