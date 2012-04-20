@@ -8,26 +8,26 @@ $('body').append(input)
 describe 'WordParser', ->
   beforeEach -> @subject = new WordParser(input)
 
-  describe 'basic attributes', ->
+  describe 'початкові значення', ->
     expectThat -> (@subject.el).should.eql(input)
     expectThat -> (@subject.word).should.eql('1, 0, 0, 1, 1, 0, 1, 0')
 
   describe "#parse", ->
-    it "should parse '1, 0, 0, 1, 1, 0, 1, 0'", ->
+    it "повинен розібрати слово '1, 0, 0, 1, 1, 0, 1, 0'", ->
       @subject.parse().then (word) ->
         (word).should.eql([1, 0, 0, 1, 1, 0, 1, 0])
 
-    it "should parse '10011010'", ->
+    it "повинен розібрати слово '10011010'", ->
       @subject.word = '10011010'
       @subject.parse().then (word) ->
         (word).should.eql([1, 0, 0, 1, 1, 0, 1, 0])
 
-  describe "@word is ''", ->
-    it "should be Empty", ->
+  describe "для слова ''", ->
+    it "має підтвердити статус Empty", ->
       @subject.word = ''
       (@subject.isEmpty()).should.be.true
 
   describe "#covert", ->
-    it "should not convert '1a1ff'", ->
+    it "не сможе сконвертувати '1a1ff'", ->
       @subject.word = '1a1ff'
       -> (@subject.convert()).should.throw('Неможливо конвертувати біт!')
